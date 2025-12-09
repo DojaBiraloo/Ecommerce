@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 const UserLayout = () => {
   return (
     <>
-    {/* <NavBar /> */}
+    <NavBar />
     <main>
       <Outlet />
     </main>
