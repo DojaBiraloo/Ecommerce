@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
 import CartDrawer from '../Layout/CartDrawer'
 import { IoMdClose } from 'react-icons/io'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
 
 const NavBar = () => {
     const[drawerOpen, setDrawerOpen] = useState(false);
@@ -29,7 +27,7 @@ const NavBar = () => {
                 </div>
 
                 <div className="hidden md:flex space-x-6 ">
-                    <Link to="#" className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Men</Link>
+                    <Link to="/collections/all" className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Men</Link>
                     <Link to="#" className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Women</Link>
                     <Link to="#" className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Top Wear</Link>
                     <Link to="#" className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Bottom Wear</Link>
@@ -58,7 +56,7 @@ const NavBar = () => {
 
             <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer} />
 
-            {/* Mobile <Navigation></Navigation> */}
+            {/* Mobile Navigation*/}
 
             <div className={`fixed top-0 left-0 w-3/4 sm:w-1/2 md:w-1/3 h-full bg-white shadow-lg transform transiiton-transform duration-300 z-50 ${
             navDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
