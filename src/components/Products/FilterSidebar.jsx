@@ -29,7 +29,8 @@ const FilterSidebar = () => {
         "Orange",
         "Pink",
         "Grey",
-        "Brown"
+        "Brown",
+        "Maroon",
     ];
     const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
@@ -110,6 +111,16 @@ const FilterSidebar = () => {
         })
         setSearchParams(params);
         navigate(`?${params.toString()}`); //?category=Botttom+Wears&size=XS%2CS
+    }
+
+    const handlePriceChange =(e) =>{
+        
+        const newPrice= e.target.value;
+        setPriceRange([0, newPrice]);
+        const newFilters={...filters, minPrice:0, maxPrice: newPrice };
+        setFilters(filters);
+        updateURLParams(newFilters);
+
     }
 
 
@@ -210,7 +221,13 @@ const FilterSidebar = () => {
             {/* Price RAnge Filter */}
             <div className="mb-8">
                 <label className='block text-gray-600 font-medium mb-2'>Price Range</label>
-                <input type="range" name="priceRange" min={0} max={100} className='w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer'/>
+                <input
+                 type="range"
+                  name="priceRange"
+                   min={0} max={100}
+                   value={priceRange[1]}
+                   onChange={handlePriceChange}
+                 className='w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer'/>
                 <div className="flex justify-between text-gray-600 mt-2">
                     <span>$0</span>
                     <span>${priceRange[1]}</span>
