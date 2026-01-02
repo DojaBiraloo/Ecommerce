@@ -4,10 +4,15 @@ import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
 import CartDrawer from '../Layout/CartDrawer'
 import { IoMdClose } from 'react-icons/io'
+import { useSelector } from 'react-redux'
 
 const NavBar = () => {
     const[drawerOpen, setDrawerOpen] = useState(false);
     const [navDrawerOpen, setnavDrawerOpen] = useState(false);
+    const {cart} = useSelector((state) => state.cart)
+    const {user} = useSelector((state) => state.auth)
+
+    const cartItemCount = cart?.products?.reduce((total, product) => total + product.quantity, 0) || 0
 
     const toggleNaDrawer = () =>{
         setnavDrawerOpen(!navDrawerOpen)
@@ -34,7 +39,8 @@ const NavBar = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <Link to="/admin" className='block bg-black px-2 rounded text-sm text-white'>Admin</Link>
+                    {user && user.role === "admin" &&( <Link to="/admin" className='block bg-black px-2 rounded text-sm text-white'>Admin</Link>)}
+                   
                     <Link to="/profile" className='hover:text-black'>
                         <HiOutlineUser className='h-6 w-6 text-gray-700' />
                     </Link>
@@ -42,7 +48,8 @@ const NavBar = () => {
                     onClick={toggleCartDrawer}
                     className='relative hover:text-black cursor-pointer'>
                         <HiOutlineShoppingBag className='h-5 w-6 text-gray-700' />
-                        <span className='absolute -top-1 bg-red-700 text-white text-xs rounded-full px-2 py-0.5'>4</span>
+                        {cartItemCount > 0 && (<span className='absolute -top-1 bg-red-700 text-white text-xs rounded-full px-2 py-0.5'>{cartItemCount}</span>)}
+                        
                     </button>
 
                     <div className="overflow-hidden">

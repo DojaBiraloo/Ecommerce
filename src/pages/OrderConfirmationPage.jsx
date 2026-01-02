@@ -1,37 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { clearCart } from '../redux/slices/cartSlice';
 
-const checkout={
-    _id: "12323",
-    createdAt: new Date(),
-    checkoutItems:[
-        {
-            productId:"1",
-            name: "T-shirt",
-            color:"black",
-            size:"M",
-            price: 150,
-            quantity: 1,
-            image: "https://picsum.photos/150?random=1",
 
-        },
-        {
-            productId:"2",
-            name: "T-shirt",
-            color:"black",
-            size:"M",
-            price: 120,
-            quantity: 1,
-            image: "https://picsum.photos/150?random=2",
-
-        },
-    ],
-    shippingAddress:{
-        address: "123 Main St",
-        city: "New York",
-        country:"USA",
-    }
-}
 const OrderConfirmationPage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {checkout} = useSelector((state) => state.checkout)
+
+
+    // Clear the cartwhen order is confirmed
+    useEffect(() =>{
+        if(checkout && checkout._id){
+            dispatch(clearCart());
+            localStorage.removeItem("cart");
+        }else{
+            navigate("/my-orders")
+        }
+    }, [checkout, dispatch, navigate])
+
+
+
     const calculateEstimateDelivery =(createdAt) =>{
           const orderDate= new Date(createdAt);
           orderDate.setDate(orderDate.getDate() + 10); //Add 10 days to the order date

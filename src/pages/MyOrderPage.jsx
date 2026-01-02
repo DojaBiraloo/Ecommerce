@@ -1,49 +1,25 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { fetchUserOrders } from '../redux/slices/orderSlice';
 
 const MyOrderPage = () => {
-    const [orders, setOrders] = useState([]);
+
     const navigate= useNavigate();
+    const dispatch = useDispatch();
+    const {orders = [], loading, error} = useSelector((state) => state.order || {});
 
     useEffect(() =>{
+      dispatch(fetchUserOrders())
+    }, [dispatch])
 
-        setTimeout (() =>{
-            const mockOrders =[
-              {
-                _id:"123445",
-                createdAt: new Date(),
-                shippingAddress:{city: "New York", country: "USA"},
-                orderItems: [
-                  {
-                    name: "Product 1",
-                  image : "https://picsum.photos/500/500?random=1",
-                },
-                ],
-                totalPrice: 100,
-                isPaid: true,
-              },
-              {
-                _id:"34567",
-                createdAt: new Date(),
-                shippingAddress:{city: "New York", country: "USA"},
-                orderItems: [
-                  {
-                    name: "Product 2",
-                  image : "https://picsum.photos/500/500?random=2",
-                },
-                ],
-                totalPrice: 100,
-                isPaid: false,
-              },
-            ]
-
-            setOrders(mockOrders);
-
-        } ,1000);
-    }, [])
+  
     const handleRowClick = (orderId) =>{
-      navigate(`/order/${orderId}`);z``
+      navigate(`/order/${orderId}`);
     }
+
+    if(loading) return <p>Loading...</p>
+    if(error) return <p>Error: {error}</p>
 
 
   return (
